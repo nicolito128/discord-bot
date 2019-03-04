@@ -7,18 +7,12 @@ const config = (global.config = require("./config.json"));
 
 // Ready
 client.on("ready", () => {
-	console.log(`¡Estoy listo! conectado en ${client.guilds.size} ${(client.guilds.size > 1) ? "servidores" : "servidor"}`);
-	client.user.setPresence({
-		status: "online",
-		game: {
-			name: `$help | Ahora en ${client.guilds.size} ${(client.guilds.size > 1) ? "servidores" : "servidor"}.`,
-			type: "PLAYING"
-		}
-	});
+	console.log(`¡Estoy listo! Conectado en ${client.guilds.size} ${(client.guilds.size > 1) ? "servidores" : "servidor"}`);
+	client.user.setActivity(`Sirviendo en ${client.guilds.size} ${(client.guilds.size > 1) ? "servidores" : "servidor"}`);
 });
 
 // Commands and Plugins
-client.on("message", (message) => {commands.loadCommands(message)});
+client.on("message", message => commands.loadCommands(message));
 
 // Catch errors and other data
 client.on("error", (e) => console.error(e));
