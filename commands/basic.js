@@ -9,6 +9,10 @@ const init = function(message, command, args, channel) {
 	    if (!texto) return channel.send(`Escribe un contenido para decir.`);
     	channel.send(texto);
     }
+    
+    if (command === 'github') {
+        channel.send('Github repository: https://github.com/nicolito128/discord-bot');
+    }
 
     if (command === 'number') {
         let number = args;
