@@ -1,8 +1,4 @@
-const init = function(message) {
-	const channel = message.channel;
-    let args = message.content.slice(config.prefix.length).trim().split(/ +/g);
-    let command = args.shift().toLowerCase();
-    
+const init = function(message, command, args, channel) {
     if (command === 'help' || command === 'ayuda') {
     	channel.send(`Conectado en **${client.guilds.size} ${(client.guilds.size > 1) ? "servidores" : "servidor"}** junto con **${client.users.size} usuarios**`);
     	channel.send(`Commands list: https://pastebin.com/raw/i9gRRsBr`);
