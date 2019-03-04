@@ -11,7 +11,17 @@ const init = function(message, command, args, channel) {
     }
     
     if (command === 'github') {
-        channel.send('Github repository: https://github.com/nicolito128/discord-bot');
+        let box = {embed: {
+            color: 0x28a745,
+            title: 'Github repository',
+            url: 'https://github.com/nicolito128/discord-bot',
+            description: 'A basic bot developed with discord.js',
+            footer: {
+                icon_url: message.author.displayAvatarURL,
+                text: "github.com/nicolito128"
+            }
+        }};
+        channel.send(box);
     }
 
     if (command === 'number') {
