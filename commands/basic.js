@@ -25,11 +25,11 @@ const init = function(message, command, args, channel) {
     }
 
     if (command === 'number') {
-        let number = args;
+        let number = args.join(" ");
         if (!number || number === 'help') return channel.send('Ingresa un número para obtener otro aleatorio entre 0 y tu número.');
 
         number = Number(number);
-        if (isNaN(number)) return channel.send(`Sólo puedes ingresar números.`);
+        if (isNaN(number)) return channel.send(`Sólo puedes ingresar números y uno sólo.`);
         if (number >= 100000000000000000) return channel.send('No voy a calcular eso.');
 
         let calc = Math.round(Math.random() * number);
