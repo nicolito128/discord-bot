@@ -16,10 +16,12 @@ function loadCommands(message) {
         for (let cmd of cmds) {
             if (cmd === command) {
                 req.init(message, command, args, channel);
+                cmds = null;
                 // console.log(req.help.name + ' loaded!');
                 break;
             } else continue;
         }
+        break;
     }
 }
 
