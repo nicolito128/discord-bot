@@ -37,4 +37,10 @@ const init = function(message, command, args, channel) {
     }
 };
 
-exports.init = init;
+module.exports = {
+    init,
+    help: {
+        name: 'Basic commands',
+        cmds: ['help', 'say', 'github', 'number']
+    }
+};
