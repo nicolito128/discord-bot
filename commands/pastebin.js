@@ -3,9 +3,10 @@ const paste = require('better-pastebin');
 paste.setDevKey("devKey"); // https://pastebin.com/api
 
 const init = function(message, command, args, channel) {
-    let text = args.join(' ');
+    
     
     if (command === "paste" || command === "pastebin" || command === "newpaste") {
+        let text = args.join(' ');
         if (!text) return channel.send('Ingresa un texto el cual escribir.');
         paste.create({
             contents: text,
