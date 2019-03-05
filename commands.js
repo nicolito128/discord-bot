@@ -4,6 +4,7 @@ function loadCommands(message) {
     const channel = message.channel;
     const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
     const command = args.shift().toLowerCase();
+    let status = false;
 
     const files = fs.readdirSync('./commands');
     for (let file of files) {
@@ -16,10 +17,12 @@ function loadCommands(message) {
         for (let cmd of cmds) {
             if (cmd === command) {
                 req.init(message, command, args, channel);
+                status = true;
                 // console.log(req.help.name + ' loaded!');
                 break;
             } else continue;
         }
+        if (status === true) break;
     }
 }
 
