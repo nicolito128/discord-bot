@@ -20,7 +20,6 @@ function loadCommands(message) {
                 break;
             } else continue;
         }
-        break;
     }
 }
 
