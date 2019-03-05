@@ -1,13 +1,6 @@
 const paste = require('better-pastebin');
 
-// https://pastebin.com/api
-paste.setDevKey("devKey");
-paste.login("username", "password", (success, data) => {
-    if(!success) {
-        console.log("Failed (" + data + ")");
-        return false;
-    }
-});
+paste.setDevKey("devKey"); // https://pastebin.com/api
 
 const init = function(message, command, args, channel) {
     let text = args.join(' ');
