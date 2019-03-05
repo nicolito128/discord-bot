@@ -25,13 +25,13 @@ const init = function(message, command, args, channel) {
         
         channel.send('Equipo añadido.');
     }
-
+    
     if (command === 'ou' || command === 'ubers' || command === 'uu') {
         let team = teams[command];
         if(team === undefined) return channel.send('No hay equipos de esta tier.');
         let random = Math.round(Math.random() * (team.length - 1));
         
-        channel.send('Random team OU for you: ' + team[random]);
+        channel.send(`Random team ${command.toUpperCase()} for you: ${team[random]}`);
     }
     
 };
