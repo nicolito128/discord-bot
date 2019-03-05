@@ -7,7 +7,7 @@ const commands = require('./commands.js');
 // Ready
 client.on("ready", () => {
 	console.log(`¡Estoy listo! Conectado en ${client.guilds.size} ${(client.guilds.size > 1) ? "servidores" : "servidor"}`);
-	client.user.setActivity(`Sirviendo en ${client.guilds.size} ${(client.guilds.size > 1) ? "servidores" : "servidor"}`);
+	client.user.setActivity(`${config.prefix}help | Sirviendo en ${client.guilds.size} ${(client.guilds.size > 1) ? "servidores" : "servidor"}`);
 });
 
 // Commands and Plugins

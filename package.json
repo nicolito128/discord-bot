@@ -4,6 +4,7 @@
   "description": "Bot de discord basado en discord.js",
   "main": "index.js",
   "dependencies": {
+    "better-pastebin": "^0.4.1",
     "discord.js": "^11.4.2",
     "superagent": "^4.1.0"
   },

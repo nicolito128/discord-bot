@@ -1,13 +1,32 @@
 const init = function(message, command, args, channel) {
+    let text = args.join(' ');
+    
     if (command === 'help' || command === 'ayuda') {
-    	channel.send(`Conectado en **${client.guilds.size} ${(client.guilds.size > 1) ? "servidores" : "servidor"}** junto con **${client.users.size} usuarios**`);
+    	channel.send(`Conectado en **${client.guilds.size} ${(client.guilds.size > 1) ? 'servidores' : 'servidor'}** junto con **${client.users.size} usuarios**`);
     	channel.send(`Commands list: https://pastebin.com/raw/i9gRRsBr`);
     }
     
     if (command === 'say') {
-        let texto = args.join(" ");
-	    if (!texto) return channel.send(`Escribe un contenido para decir.`);
-    	channel.send(texto);
+	    if (!text) return channel.send(`Escribe un contenido para decir.`);
+    	channel.send(text);
+    }
+    
+    if (command === 'esay' || command === 'shadowsay') {
+        if(!message.member.hasPermissions('KICK_MEMBERS')) {
+             return channel.send({embed: {
+                color: 0xff0000,
+                title: '**Access denied**',
+                description: 'You do not have enough power to use this command'
+            }});
+        }
+        
+        if(!text) {
+            return message.channel.send(`Escribe un contenido para decir.`);
+        } else {
+            message.channel.send(text);
+            message.delete().catch(() => {});
+        }
+        
     }
     
     if (command === 'github') {
@@ -18,14 +37,14 @@ const init = function(message, command, args, channel) {
             description: 'A basic bot developed with discord.js',
             footer: {
                 icon_url: message.author.displayAvatarURL,
-                text: "github.com/nicolito128"
+                text: 'github.com/nicolito128'
             }
         }};
         channel.send(box);
     }
 
     if (command === 'number') {
-        let number = args.join(" ");
+        let number = args.join(' ');
         if (!number || number === 'help') return channel.send('Ingresa un número para obtener otro aleatorio entre 0 y tu número.');
 
         number = Number(number);
@@ -41,6 +60,6 @@ module.exports = {
     init,
     help: {
         name: 'Basic commands',
-        cmds: ['help', 'say', 'github', 'number']
+        cmds: ['help', 'say', 'esay', 'shadowsay', 'github', 'number']
     }
 };
