@@ -11,8 +11,8 @@ function loadCommands(message) {
         if (!file.includes('.js')) continue;
         let req = require(`./commands/${file}`);
         
-        if (!req.help.cmds || req.help.cmds !== Array) return new Error('The list of "cmds" needed to execute the command was not found');
-        if (!req.init || req.init !== Function) return new Error('The function "init" needed to execute the command was not found');
+        if (!req.help.cmds) return new Error('The list of "cmds" needed to execute the command was not found');
+        if (!req.init) return new Error('The function "init" needed to execute the command was not found');
         let cmds = req.help.cmds;
         
         for (let cmd of cmds) {
