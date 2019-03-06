@@ -17,23 +17,23 @@ const init = function(message, command, args, channel) {
         
         if(!tier) return channel.send('Especifica una tier.');
         if(!team) return channel.send('Especifica un team.');
-        
-        if(!teams[tier]) teams[tier] = [];
-        teams[tier].push(team);
-        teams = JSON.stringify(teams);
-        fs.writeFile(__dirname + '/../data/teams.json', teams);
-        
-        channel.send('Equipo añadido.');
+        if (tier === 'ou' || tier === 'ubers' || tier === 'uu' || tier === 'pu' || tier === 'nu' || tier === 'lc') {
+            if(!teams[tier]) teams[tier] = [];
+            teams[tier].push(team);
+            teams = JSON.stringify(teams);
+            fs.writeFile(__dirname + '/../data/teams.json', teams);
+            
+            return channel.send('Equipo añadido.');
+        } else return channel.send('Especifica una tier válida.');
     }
     
-    if (command === 'ou' || command === 'ubers' || command === 'uu' || command === 'pu' || command === 'nu' ||command === 'lc') {
+    if (command === 'ou' || command === 'ubers' || command === 'uu' || command === 'pu' || command === 'nu' || command === 'lc') {
         let team = teams[command];
         if(team === undefined) return channel.send('No hay equipos de esta tier.');
         let random = Math.round(Math.random() * (team.length - 1));
         
         channel.send(`Random team ${command.toUpperCase()} for you: ${team[random]}`);
     }
-    
 };
 
 module.exports = {
