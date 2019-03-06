@@ -12,7 +12,7 @@ const init = function(message, command, args, channel) {
     }
     
     if (command === 'esay' || command === 'shadowsay') {
-        if(!message.member.hasPermissions('KICK_MEMBERS')) {
+        if(!message.member.hasPermission('KICK_MEMBERS')) {
              return channel.send({embed: {
                 color: 0xff0000,
                 title: '**Access denied**',

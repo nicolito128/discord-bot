@@ -6,7 +6,7 @@ const init = function(message, command, args, channel) {
 	teams = JSON.parse(fs.readFileSync(__dirname + '/../data/teams.json'));
 	
 	if (command === 'addteam') {
-		if (!message.member.hasPermissions('SEND_MESSAGES')) {
+		if (!message.member.hasPermission('SEND_MESSAGES')) {
 			return channel.send({
 				embed: {
 					color: 0xff0000,

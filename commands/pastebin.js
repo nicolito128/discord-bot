@@ -3,7 +3,7 @@ const paste = require('better-pastebin');
 paste.setDevKey("devKey"); // https://pastebin.com/api
 
 const init = function(message, command, args, channel) {
-	if (!message.member.hasPermissions('SEND_MESSAGES')) {
+	if (!message.member.hasPermission('SEND_MESSAGES')) {
 		return channel.send({
 			embed: {
 				color: 0xff0000,
