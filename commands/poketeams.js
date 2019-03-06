@@ -19,17 +19,17 @@ const init = function(message, command, args, channel) {
 		if (!tier) return channel.send('Especifica una tier.');
 		if (!team) return channel.send('Especifica un team.');
 		
-		for (let t in validTiers) {
-			if (tier.includes(validTiers[t])) {
-				if (!teams[tier]) teams[tier] = [];
-				
-				teams[tier].push(team);
-				teams = JSON.stringify(teams);
-				fs.writeFile(__dirname + '/../data/teams.json', teams);
-				
-				return channel.send('Equipo añadido.');
+		if (team.includes('pokepast.es')) {
+			for (let t in validTiers) {
+				if (tier.includes(validTiers[t])) {
+					if (!teams[tier]) teams[tier] = [];
+					teams[tier].push(team);
+					teams = JSON.stringify(teams);
+					fs.writeFile(__dirname + '/../data/teams.json', teams);
+					return channel.send('Equipo guardado.');
+				} else return channel.send('Tier no válida.');
 			}
-		}
+		} else return channel.send('Utiliza la página https://pokepast.es/ para guardar un equipo.');
 	}
 	
 	for (let t in validTiers) {
@@ -37,7 +37,7 @@ const init = function(message, command, args, channel) {
 			let team = teams[command];
 			if (team === undefined) return channel.send('No hay equipos de esta tier.');
 			let random = Math.round(Math.random() * (team.length - 1));
-			channel.send(`Random team ${command.toUpperCase()} for you: ${team[random]}`);
+			return channel.send(`Random team ${command.toUpperCase()} for you: ${team[random]}`);
 		}
 	}
 };
