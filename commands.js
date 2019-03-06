@@ -11,11 +11,12 @@ function loadCommands(message) {
         if (!file.includes('.js')) continue;
         let req = require(`./commands/${file}`);
         
-        if (!req.help.cmds) return new Error('The list of "cmds" needed to execute the command was not found');
+        if (!req.help.cmds || typeof req.help.cmds !== 'array') return new Error('The list of "cmds" needed to execute the command was not found');
+        if (!req.init || typeof req.init !== 'function') return new Error('The function "init" needed to execute the command was not found');
         let cmds = req.help.cmds;
         
         for (let cmd of cmds) {
-            if (cmd === command) {
+            if (command === cmd) {
                 req.init(message, command, args, channel);
                 status = true;
                 // console.log(req.help.name + ' loaded!');
