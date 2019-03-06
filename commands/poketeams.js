@@ -13,14 +13,14 @@ const init = function(message, command, args, channel) {
 			return channel.send('Uso: $addteam [**tier**] [**team**]');
 		}
 		
-		let tier = targets[0].toLowerCase();
+		let tier = targets[0];
 		let team = targets[1];
 		
 		if (!tier) return channel.send('Especifica una tier.');
 		if (!team) return channel.send('Especifica un team.');
 		
 		for (let t in validTiers) {
-			if (tier === validTiers[t]) {
+			if (tier.includes(validTiers[t])) {
 				if (!teams[tier]) teams[tier] = [];
 				
 				teams[tier].push(team);
@@ -28,7 +28,7 @@ const init = function(message, command, args, channel) {
 				fs.writeFile(__dirname + '/../data/teams.json', teams);
 				
 				return channel.send('Equipo añadido.');
-			} else return channel.send('Especifica una tier válida.');
+			}
 		}
 	}
 	
