@@ -8,7 +8,9 @@
     "discord.js": "^11.4.2",
     "superagent": "^4.1.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "nodemon": "^1.18.10"
+  },
   "scripts": {
     "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
