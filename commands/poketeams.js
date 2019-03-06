@@ -1,5 +1,5 @@
 const fs = require('fs');
-const validTiers = ['ou', 'ubers'];
+const validTiers = ['ou', 'ubers', 'uu', 'pu', 'nu', 'lc'];
 
 const init = function(message, command, args, channel) {
 	let teams = {};
@@ -31,6 +31,7 @@ const init = function(message, command, args, channel) {
 			} else return channel.send('Especifica una tier válida.');
 		}
 	}
+	
 	
 	for (let t in validTiers) {
 		if (command === validTiers[t]) {
