@@ -18,10 +18,6 @@ const init = function(message, command, args, channel) {
 		
 		if (!tier) return channel.send('Especifica una tier.');
 		if (!team) return channel.send('Especifica un team.');
-		if (!team.includes('hastebin.com') || !team.includes('pastebin.com') || !team.includes('pokepast.es')) {
-			channel.send('El link que intentas ingresar no es válido. Puedes utilizar: **pokepast**, **hastebin** o **pastebin**');
-			return channel.send('Opción recomendada: https://pokepast.es/');
-		}
 		
 		for (let t in validTiers) {
 			if (tier === validTiers[t]) {
