@@ -3,6 +3,16 @@ const paste = require('better-pastebin');
 paste.setDevKey("devKey"); // https://pastebin.com/api
 
 const init = function(message, command, args, channel) {
+	if (!message.member.hasPermissions('SEND_MESSAGES')) {
+		return channel.send({
+			embed: {
+				color: 0xff0000,
+				title: '**Access denied**',
+				description: 'You do not have enough power to use this command'
+			}
+		});
+	}
+    
 	let targets = args.join(" ");
 	targets = targets.split(">>");
 	

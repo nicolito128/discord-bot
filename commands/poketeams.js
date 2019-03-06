@@ -6,6 +6,16 @@ const init = function(message, command, args, channel) {
 	teams = JSON.parse(fs.readFileSync(__dirname + '/../data/teams.json'));
 	
 	if (command === 'addteam') {
+		if (!message.member.hasPermissions('SEND_MESSAGES')) {
+			return channel.send({
+				embed: {
+					color: 0xff0000,
+					title: '**Access denied**',
+					description: 'You do not have enough power to use this command'
+				}
+			});
+		}
+		
 		let targets = args.join(" ");
 		targets = targets.split(" ");
 		
@@ -35,7 +45,7 @@ const init = function(message, command, args, channel) {
 	for (let t in validTiers) {
 		if (command === validTiers[t]) {
 			let team = teams[command];
-			if (team === undefined) return channel.send('No hay equipos de esta tier.');
+			if (!team || team === undefined) return channel.send('No hay equipos de esta tier.');
 			let random = Math.round(Math.random() * (team.length - 1));
 			return channel.send(`Random team ${command.toUpperCase()} for you: ${team[random]}`);
 		}
