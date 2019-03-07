@@ -11,7 +11,7 @@ client.on("ready", () => {
 });
 
 // Commands and Plugins
-client.on("message", async message => await commands.loadCommands(message));
+client.on("message", async message => await commands.run(message));
 
 // Catch errors and other data
 client.on("error", (e) => console.error(e));
