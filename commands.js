@@ -1,5 +1,5 @@
 const fs = require('fs');
-const config = require("./config.json");
+const config = require('./config.json');
 
 function loadFiles() {
     const files = fs.readdirSync('./commands');
