@@ -3,8 +3,8 @@ const paste = require('better-pastebin');
 paste.setDevKey("devKey"); // https://pastebin.com/api
 
 const init = function(message, command, args, channel) {
-	let targets = args.join(" ");
-	targets = targets.split(">>");
+	let targets = args.join(' ');
+	targets = targets.split('>>');
 	
 	let text = targets[0];
 	let title = targets[1];
@@ -21,7 +21,7 @@ const init = function(message, command, args, channel) {
 		format: format
 	}, (success, data) => {
 		if (success) {
-			channel.send(data);
+			return channel.send(data);
 		} else {
 			console.log(data);
 		}
