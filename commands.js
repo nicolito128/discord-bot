@@ -29,10 +29,16 @@ function checkPermissions(permission, message) {
 function run(message) {
 	const files = loadFiles();
 	
-	let s = false,
+	let status = false;
+	let channel, args, command;
+	
+	if (!message.content.includes(config.prefix)) {
+		return false;
+	} else {
 		channel = message.channel,
 		args = message.content.slice(config.prefix.length).trim().split(/ +/g),
 		command = args.shift().toLowerCase();
+	}
 	
 	for (let f in files) {
 		const request = require(`./commands/${files[f]}`);
@@ -40,29 +46,29 @@ function run(message) {
 		if (!request.init) return new Error('The function "init" needed to execute the command was not found');
 		if (!request.help.cmds) return new Error('The list of "cmds" needed to execute the command was not found');
 		
-		const cmds = request.help.cmds;
-		
-		const permission = request.help.permission;
-		const permissionValue = checkPermissions(permission, message);
-		const embed = {
-		    embed: {
-		        color: 0xff0000,
-		        title: '**Access denied**',
-		        description: `You do not have enough power to use this command. Require permission: ${permission}`
-		}};
+		const cmds = request.help.cmds,
+		    permission = request.help.permission,
+			permissionValue = checkPermissions(permission, message),
+			embed = {
+				embed: {
+					color: 0xff0000,
+					title: '**Access denied**',
+					description: `You do not have enough power to use this command. Require permission: ${permission}`
+				}
+			};
 		
 		for (let c in cmds) {
-			if (command === cmds[c]) {
+			if (cmds && command === cmds[c]) {
 				if (!permissionValue) {
 					channel.send(embed);
 					break;
 				}
 				
 				request.init(message, command, args, channel);
-				s = true;
+				status = true;
 				break;
 			}
-			if (s) break;
+			if (status) break;
 		}
 	}
 }
