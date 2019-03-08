@@ -31,7 +31,6 @@ function checkPermissions(permission, message) {
 function run(message) {
 	const files = loadFiles();
 	
-	let status = false;
 	let channel, args, command;
 	
 	// If the command does not include the prefix, nothing will happen
@@ -67,12 +66,9 @@ function run(message) {
 					break;
 				}
 				
-				curCommand.init(message, command, args, channel);
-				status = true;
-				break;
+				return curCommand.init(message, command, args, channel);
 			}
 		}
-		if (status) break;
 	}
 }
 
