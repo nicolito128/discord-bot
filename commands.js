@@ -46,8 +46,8 @@ function run(message) {
 		const curCommand = require(`./commands/${files[f]}`);
 		
 		if (!curCommand.init) return new Error('The function "init" needed to execute the command was not found');
-		if (!curCommand.help.cmds) return new Error('The list of "cmds" needed to execute the command was not found');
-		
+		if (!curCommand.help) return new Error('The object "help" needed to execute the command was not found');
+
 		const cmds = curCommand.help.cmds,
 		    permission = curCommand.help.permission,
 			permissionValue = checkPermissions(permission, message),

@@ -6,18 +6,8 @@ const init = function(message, command, args, channel) {
 	teams = JSON.parse(fs.readFileSync(__dirname + '/../data/teams.json'));
 	
 	if (command === 'addteam') {
-		if (!message.member.hasPermission('SEND_MESSAGES')) {
-			return channel.send({
-				embed: {
-					color: 0xff0000,
-					title: '**Access denied**',
-					description: 'You do not have enough power to use this command'
-				}
-			});
-		}
-		
-		let targets = args.join(" ");
-		targets = targets.split(" ");
+		let targets = args.join(' ');
+		targets = targets.split(' ');
 		
 		if (!targets[0] || targets[0] === 'help') {
 			return channel.send('Uso: $addteam [**tier**] [**team**]');

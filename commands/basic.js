@@ -12,14 +12,6 @@ const init = function(message, command, args, channel) {
     }
     
     if (command === 'esay' || command === 'shadowsay') {
-        if(!message.member.hasPermission('KICK_MEMBERS')) {
-             return channel.send({embed: {
-                color: 0xff0000,
-                title: '**Access denied**',
-                description: 'You do not have enough power to use this command'
-            }});
-        }
-        
         if(!text) {
             return message.channel.send(`Escribe un contenido para decir.`);
         } else {
