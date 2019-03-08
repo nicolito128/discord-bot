@@ -62,8 +62,7 @@ function run(message) {
 		for (let c in cmds) {
 			if (cmds && command === cmds[c]) {
 				if (!permissionValue) {
-					channel.send(embed);
-					break;
+					return channel.send(embed);
 				}
 				
 				return curCommand.init(message, command, args, channel);
