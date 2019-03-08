@@ -4,6 +4,7 @@ const config = require('./config.json');
 function loadFiles() {
     const files = fs.readdirSync('./commands');
     for (let file of files) {
+    	// Filter all non-JS files from the command folder
         if (!file.includes('.js')) {
             let index = files.indexOf(file);
             files.splice(index, 1);
@@ -12,6 +13,7 @@ function loadFiles() {
     return files;
 }
 
+// Check if the user can use this command
 function checkPermissions(permission, message) {
     if (!permission || permission === undefined) {
         permission = 'SEND_MESSAGES';
@@ -32,6 +34,7 @@ function run(message) {
 	let status = false;
 	let channel, args, command;
 	
+	// If the command does not include the prefix, nothing will happen
 	if (!message.content.includes(config.prefix)) {
 		return false;
 	} else {
