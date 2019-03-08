@@ -71,8 +71,8 @@ function run(message) {
 				status = true;
 				break;
 			}
-			if (status) break;
 		}
+		if (status) break;
 	}
 }
 
