@@ -44,18 +44,18 @@ function run(message) {
 	}
 	
 	for (let f in files) {
-		const request = require(`./commands/${files[f]}`);
+		const curCommand = require(`./commands/${files[f]}`);
 		
-		if (!request.init) return new Error('The function "init" needed to execute the command was not found');
-		if (!request.help.cmds) return new Error('The list of "cmds" needed to execute the command was not found');
+		if (!curCommand.init) return new Error('The function "init" needed to execute the command was not found');
+		if (!curCommand.help.cmds) return new Error('The list of "cmds" needed to execute the command was not found');
 		
-		const cmds = request.help.cmds,
-		    permission = request.help.permission,
+		const cmds = curCommand.help.cmds,
+		    permission = curCommand.help.permission,
 			permissionValue = checkPermissions(permission, message),
 			embed = {
 				embed: {
 					color: 0xff0000,
-					title: '**Access denied**',
+					title: 'Access denied',
 					description: `You do not have enough power to use this command. Require permission: ${permission}`
 				}
 			};
@@ -67,7 +67,7 @@ function run(message) {
 					break;
 				}
 				
-				request.init(message, command, args, channel);
+				curCommand.init(message, command, args, channel);
 				status = true;
 				break;
 			}
