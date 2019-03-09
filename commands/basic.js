@@ -2,21 +2,23 @@ const init = function(message, command, args, channel) {
     let text = args.join(' ');
     
     if (command === 'help' || command === 'ayuda') {
-    	channel.send(`Conectado en **${client.guilds.size} ${(client.guilds.size > 1) ? 'servidores' : 'servidor'}** junto con **${client.users.size} usuarios**`);
+    	channel.send(`Connected in **${client.guilds.size} ${(client.guilds.size > 1) ? 'servers' : 'server'}** with **${client.users.size} users**`);
     	channel.send(`Commands list: https://nicolito128.github.io/discord-bot/commands`);
+    	return;
     }
     
     if (command === 'say') {
-	    if (!text) return channel.send(`Escribe un contenido para decir.`);
-    	channel.send(text);
+	    if (!text) return channel.send(`A text is required.`);
+    	return channel.send(text);
     }
     
     if (command === 'esay' || command === 'shadowsay') {
         if(!text) {
-            return message.channel.send(`Escribe un contenido para decir.`);
+            return message.channel.send(`A text is required.`);
         } else {
             message.channel.send(text);
             message.delete().catch(() => {});
+            return;
         }
         
     }
@@ -32,16 +34,16 @@ const init = function(message, command, args, channel) {
                 text: 'github.com/nicolito128'
             }
         }};
-        channel.send(box);
+        return channel.send(box);
     }
 
     if (command === 'number') {
         let number = args.join(' ');
-        if (!number || number === 'help') return channel.send('Ingresa un número para obtener otro aleatorio entre 0 y tu número.');
+        if (!number || number === 'help') return channel.send('Enter a number to return another number between 0 and your number.');
 
         number = Number(number);
-        if (isNaN(number)) return channel.send(`Sólo puedes ingresar números y uno sólo.`);
-        if (number >= 100000000000000000) return channel.send('No voy a calcular eso.');
+        if (isNaN(number)) return channel.send(`Invalid value! enter only numbers`);
+        if (number >= 100000000000000000) return channel.send("I'm not going to calculate that");
 
         let calc = Math.round(Math.random() * number);
         return channel.send(calc);

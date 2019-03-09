@@ -12,7 +12,7 @@ const init = function(message, command, args, channel) {
 	
 	if (!title) title = 'Untitle';
 	if (!format) format = 'text';
-	if (!text) return channel.send('Uso: $newpaste [**contenido del paste**] >>[**titulo**] >>[**format**] - El titulo y el formato son opcionales. Ejemplo de uso: $newpaste var myApp = {}; >>My JS code >>javascript');
+	if (!text) return channel.send('Use: $newpaste [**text**] >>[**title**] >>[**format**] - The title and format are optional. Ex: $newpaste var myApp = {}; >>My JS code >>javascript');
 	
 	paste.create({
 		contents: text,
