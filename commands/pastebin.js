@@ -2,7 +2,7 @@ const paste = require('better-pastebin');
 
 paste.setDevKey("devKey"); // https://pastebin.com/api
 
-const init = function(message, command, args, channel) {
+const init = function(message, user, command, args) {
 	let targets = args.join(' ');
 	targets = targets.split('>>');
 	
@@ -12,7 +12,7 @@ const init = function(message, command, args, channel) {
 	
 	if (!title) title = 'Untitle';
 	if (!format) format = 'text';
-	if (!text) return channel.send('Use: $newpaste [**text**] >>[**title**] >>[**format**] - The title and format are optional. Ex: $newpaste var myApp = {}; >>My JS code >>javascript');
+	if (!text) return message.reply('Use: $newpaste [**text**] >>[**title**] >>[**format**] - The title and format are optional. Ex: $newpaste var myApp = {}; >>My JS code >>javascript');
 	
 	paste.create({
 		contents: text,
@@ -21,7 +21,7 @@ const init = function(message, command, args, channel) {
 		format: format
 	}, (success, data) => {
 		if (success) {
-			return channel.send(data);
+			return message.channel.send(data);
 		} else {
 			console.log(data);
 		}
