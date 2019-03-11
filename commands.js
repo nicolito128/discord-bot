@@ -31,14 +31,14 @@ function checkPermissions(permission, message) {
 function run(message) {
 	const files = loadFiles();
 	
-	let channel, args, command;
+	let args, command, user;
 	
 	// If the command does not include the prefix, nothing will happen
 	if (!message.content.includes(config.prefix)) {
 		return false;
 	} else {
-		channel = message.channel,
-		args = message.content.slice(config.prefix.length).trim().split(/ +/g),
+		user = message.member.user;
+		args = message.content.slice(config.prefix.length).trim().split(/ +/g);
 		command = args.shift().toLowerCase();
 	}
 	
@@ -62,10 +62,10 @@ function run(message) {
 		for (let c in cmds) {
 			if (cmds && command === cmds[c]) {
 				if (!permissionValue) {
-					return channel.send(embed);
+					return message.channel.send(embed);
 				}
 				
-				return curCommand.init(message, command, args, channel);
+				return curCommand.init(message, user, command, args);
 			}
 		}
 	}
