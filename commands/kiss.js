@@ -14,6 +14,18 @@ const kisses = [
     {
         link: 'https://media.giphy.com/media/CE1sk31EVmjNS/giphy.gif',
         color: 0xCA3131
+    },
+    {
+        link: 'https://media.giphy.com/media/3o72FiXBdWRy3aZHJm/giphy.gif',
+        color: 0x73DC4E
+    },
+    {
+        link: 'https://media.giphy.com/media/G3va31oEEnIkM/giphy.gif',
+        color: 0xF899D1
+    },
+    {
+        link: 'https://media.giphy.com/media/bm2O3nXTcKJeU/giphy.gif',
+        color: 0xB5B8B9
     }
 ];
 
