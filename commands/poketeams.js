@@ -46,6 +46,6 @@ module.exports = {
     init,
     help: {
         name: 'Pokémon Teams',
-        cmds: ['ou', 'ubers', 'uu', 'pu', 'nu', 'lc', 'addteam']
+        cmds: validTiers.concat('addteam')
     }
 };
