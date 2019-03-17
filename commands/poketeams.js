@@ -5,10 +5,10 @@ function writeTeams(teams) {
 	if (!teams || teams === undefined || !typeof teams == 'object') {
 		return new Error("Can't overwrite the file!");
 	}
-	return fs.writeFile(__dirname + '/../data/teams.json', teams);
+	fs.writeFileSync(__dirname + '/../data/teams.json', teams);
 }
 
-const init = function(message, user, command, args) {
+const init = async function(message, user, command, args) {
 	let teams = {};
 	teams = JSON.parse(fs.readFileSync(__dirname + '/../data/teams.json'));
 	
@@ -32,8 +32,8 @@ const init = function(message, user, command, args) {
 					if (!teams[tier]) teams[tier] = [];
 					teams[tier].push(team);
 					teams = JSON.stringify(teams);
-					writeTeams(teams);
-					return message.channel.send('Team saved successfully.');
+					await message.channel.send('Team saved successfully.');
+					return writeTeams(teams);
 				} else return message.reply('Invalid tier.');
 			}
 		} else return message.reply('Use the https://pokepast.es/ page to save a team.');
