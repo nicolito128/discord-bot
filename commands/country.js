@@ -20,12 +20,19 @@ const init = async function(message, user, command, args){
     
     if (!country || country == undefined) return message.channel.send('Country not found');
     
-    message.channel.send(country.timezones);
+    if (command == 'timezone' || command == 'timezones') return message.channel.send(`**${country.name} timezone**: ${country.timezones}`);
+    if (command == 'population') return message.channel.send(`**Population**: ${country.population}`);
+    if (command == 'flag') {
+        let embed = new Discord.RichEmbed()
+            .setImage(`https://countryflags.io/${country.alpha2Code}/shiny/64.png`);
+        message.channel.send(`**${country.altSpellings[country.altSpellings.length - 1]}**`);
+        return message.channel.send(embed);
+    }
 };
 
 module.exports = {
     init,
     help: {
-        cmds: ['timezones', 'timezone']
+        cmds: ['timezones', 'timezone', 'population', 'flag']
     }
 };
