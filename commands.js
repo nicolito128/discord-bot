@@ -69,7 +69,7 @@ function run(message) {
 	const params = setCommandParams(message);
 	let args, command, user;
 	
-	if(!params || params == false) {
+	if(!params) {
 		return false;
 	} else {
 		args = params[0];
