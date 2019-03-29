@@ -72,9 +72,7 @@ function run(message) {
 	if(!params) {
 		return false;
 	} else {
-		args = params[0];
-		user = params[1];
-		command = params[2];
+		[args, user, command] = params;
 	}
 	
 	for (let f in files) {
