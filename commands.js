@@ -28,46 +28,58 @@ function checkPermissions(permission, message) {
     return true;
 }
 
-function run(message) {
-	const files = loadFiles();
-	
-	let args, command, user;
-	
-	// If the command does not include the prefix, nothing will happen
+function setCommandParams(message) {
 	if (!message.content.includes(config.prefix)) {
 		return false;
 	} else {
-		user = message.member.user;
-		args = message.content.slice(config.prefix.length).trim().split(/ +/g);
-		command = args.shift().toLowerCase();
+		let user = message.member.user,
+			args = message.content.slice(config.prefix.length).trim().split(/ +/g),
+			command = args.shift().toLowerCase();
+		return [args, user, command];
+	}
+}
+
+function checkCommand(curCommand, message, command, user, args) {
+	if (!curCommand.init) return new Error('The function "init" needed to execute the command was not found');
+	if (!curCommand.help) return new Error('The object "help" needed to execute the command was not found');
+	
+	const cmds = curCommand.help.cmds,
+		permission = curCommand.help.permission,
+		permissionValue = checkPermissions(permission, message),
+		embed = {
+			embed: {
+				color: 0xff0000,
+				title: 'Access denied',
+				description: `You do not have enough power to use this command. Require permission: ${permission}`
+			}
+		};
+	
+	for (let c in cmds) {
+		if (cmds && command === cmds[c]) {
+			if (!permissionValue || permissionValue == undefined) {
+				return message.channel.send(embed);
+			}
+			return curCommand.init(message, user, command, args);
+		}
+	}
+}
+
+function run(message) {
+	const files = loadFiles();
+	const params = setCommandParams(message);
+	let args, command, user;
+	
+	if(!params || params == false) {
+		return false;
+	} else {
+		args = params[0];
+		user = params[1];
+		command = params[2];
 	}
 	
 	for (let f in files) {
 		const curCommand = require(`./commands/${files[f]}`);
-		
-		if (!curCommand.init) return new Error('The function "init" needed to execute the command was not found');
-		if (!curCommand.help) return new Error('The object "help" needed to execute the command was not found');
-
-		const cmds = curCommand.help.cmds,
-		    permission = curCommand.help.permission,
-			permissionValue = checkPermissions(permission, message),
-			embed = {
-				embed: {
-					color: 0xff0000,
-					title: 'Access denied',
-					description: `You do not have enough power to use this command. Require permission: ${permission}`
-				}
-			};
-		
-		for (let c in cmds) {
-			if (cmds && command === cmds[c]) {
-				if (!permissionValue) {
-					return message.channel.send(embed);
-				}
-				
-				return curCommand.init(message, user, command, args);
-			}
-		}
+		return checkCommand(curCommand, message, command, user, args);
 	}
 }
 
