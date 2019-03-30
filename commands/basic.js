@@ -1,29 +1,27 @@
-const init = function(message, user, command, args) {
-    let text = args.join(' ');
-    
-    if (command === 'help' || command === 'ayuda') {
+
+let commands = {
+    help: function(message, user, command, args) {
     	message.channel.send(`Connected in **${client.guilds.size} ${(client.guilds.size > 1) ? 'servers' : 'server'}** with **${client.users.size} users**`);
     	message.channel.send(`Commands list: https://nicolito128.github.io/discord-bot/commands`);
-    	return;
-    }
-    
-    if (command === 'say') {
+    },
+    say: function(message, user, command, args) {
+        let text = args.join(' ');
+        
 	    if (!text) return message.channel.send(`A text is required.`);
     	return message.channel.send(text);
-    }
-    
-    if (command === 'esay' || command === 'shadowsay') {
+    },
+    shadowsay: function(message, user, command, args) {
+        let text = args.join(' ');
+        
         if(!text) {
             return message.message.channel.send(`A text is required.`);
         } else {
-            message.message.channel.send(text);
+            message.channel.send(text);
             message.delete().catch(() => {});
             return;
         }
-        
-    }
-    
-    if (command === 'github') {
+    },
+    github: function(message, user, command, args) {
         let box = {embed: {
             color: 0x28a745,
             title: 'Github repository',
@@ -35,9 +33,8 @@ const init = function(message, user, command, args) {
             }
         }};
         return message.channel.send(box);
-    }
-
-    if (command === 'number') {
+    },
+    number: function(message, user, command, args) {
         let number = args.join(' ');
         if (!number || number === 'help') return message.channel.send('Enter a number to return another number between 0 and your number.');
 
@@ -49,11 +46,6 @@ const init = function(message, user, command, args) {
         return message.channel.send(calc);
     }
 };
+commands['esay'] = commands.shadowsay;
 
-module.exports = {
-    init,
-    help: {
-        name: 'Basic commands',
-        cmds: ['help', 'say', 'esay', 'shadowsay', 'github', 'number']
-    }
-};
+exports.commands = commands;

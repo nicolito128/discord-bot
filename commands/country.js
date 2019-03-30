@@ -10,29 +10,48 @@ async function getCountry(countryName) {
     }
 }
 
-const init = async function(message, user, command, args){
-    let targets = args.join(' '),
+const commands = {
+    timezone: async function(message, user, command, args) {
+        let targets = args.join(' ');
+        let country;
+        targets = targets.split(' ');
+    
+        if (targets.length > 1) return message.channel.send('You can only enter a country.');
+        country = await getCountry(targets[0]);
+    
+        if (!country || country == undefined) return message.channel.send('Country not found');
+        
+        return message.channel.send(`**${country.name} timezone**: ${country.timezones}`);
+    },
+    population: async function(message, user, command, args) {
+        let targets = args.join(' '),
         country;
-    targets = targets.split(' ');
+        targets = targets.split(' ');
     
-    if (targets.length > 1) return message.channel.send('You can only enter a country.');
-    country = await getCountry(targets[0]);
+        if (targets.length > 1) return message.channel.send('You can only enter a country.');
+        country = await getCountry(targets[0]);
     
-    if (!country || country == undefined) return message.channel.send('Country not found');
+        if (!country || country == undefined) return message.channel.send('Country not found');
+        
+        return message.channel.send(`**Population**: ${country.population}`);
+    },
+    flag: async function(message, user, command, args) {
+        let targets = args.join(' '),
+        country;
+        targets = targets.split(' ');
     
-    if (command == 'timezone' || command == 'timezones') return message.channel.send(`**${country.name} timezone**: ${country.timezones}`);
-    if (command == 'population') return message.channel.send(`**Population**: ${country.population}`);
-    if (command == 'flag') {
+        if (targets.length > 1) return message.channel.send('You can only enter a country.');
+        country = await getCountry(targets[0]);
+    
+        if (!country || country == undefined) return message.channel.send('Country not found');
+        
+        
         let embed = new Discord.RichEmbed()
             .setImage(`https://countryflags.io/${country.alpha2Code}/shiny/64.png`);
         message.channel.send(`**${country.altSpellings[country.altSpellings.length - 1]}**`);
+        
         return message.channel.send(embed);
     }
 };
 
-module.exports = {
-    init,
-    help: {
-        cmds: ['timezones', 'timezone', 'population', 'flag']
-    }
-};
+exports.commands = commands;

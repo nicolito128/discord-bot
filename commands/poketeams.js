@@ -8,11 +8,10 @@ function writeTeams(teams) {
 	fs.writeFileSync(__dirname + '/../data/teams.json', teams);
 }
 
-const init = async function(message, user, command, args) {
-	let teams = {};
-	teams = JSON.parse(fs.readFileSync(__dirname + '/../data/teams.json'));
-	
-	if (command === 'addteam') {
+let teams = JSON.parse(fs.readFileSync(__dirname + '/../data/teams.json'));
+
+const commands = {
+	addteam: async function(message, user, command, args) {
 		let targets = args.join(' ');
 		targets = targets.split(' ');
 		
@@ -28,31 +27,29 @@ const init = async function(message, user, command, args) {
 		
 		if (team.includes('pokepast.es')) {
 			for (let t in validTiers) {
+				
 				if (tier.includes(validTiers[t])) {
+					
 					if (!teams[tier]) teams[tier] = [];
 					teams[tier].push(team);
 					teams = JSON.stringify(teams);
+					
 					await message.channel.send('Team saved successfully.');
+					
 					return writeTeams(teams);
 				} else return message.reply('Invalid tier.');
 			}
 		} else return message.reply('Use the https://pokepast.es/ page to save a team.');
-	}
+	},
 	
-	for (let t in validTiers) {
-		if (command === validTiers[t]) {
-			let team = teams[command];
-			if (!team || team === undefined) return message.channel.send('There are not teams in this tier.');
-			let random = Math.round(Math.random() * (team.length - 1));
-			return message.channel.send(`A random team ${command.toUpperCase()} for you: ${team[random]}`);
-		}
+	team: function(message, user, command, args) {
+		let team = teams[args];
+		
+		if (!team || team === undefined) return message.channel.send('There are not teams in this tier.');
+		
+		let random = Math.round(Math.random() * (team.length - 1));
+		return message.channel.send(`A random team ${command.toUpperCase()} for you: ${team[random]}`);
 	}
 };
 
-module.exports = {
-    init,
-    help: {
-        name: 'Pokémon Teams',
-        cmds: validTiers.concat('addteam')
-    }
-};
+exports.commands = commands;
