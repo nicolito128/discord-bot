@@ -1,3 +1,5 @@
+'use strict';
+
 const fs = require('fs');
 const config = require('./config.json');
 
@@ -47,13 +49,14 @@ function checkCommand(curCommand, message, command) {
 			embed: {
 				color: 0xff0000,
 				title: 'Access denied',
-				description: `You do not have enough power to use this command. Require permission: ${curCommand.permission}`
+				description: `You do not have enough power to use this command. Require permission: ${curCommand.permission && curCommand.permission != undefined ? curCommand.permission : 'SEND_MESSAGES'}`
 			}
 		};
-	if (!permission) return message.channel.send(embed);
 	
 	curCommand = curCommand.commands[command];
 	if (curCommand && curCommand != undefined) {
+		if (!permission) return message.channel.send(embed);
+		
 		return curCommand;
 	} else {
 		return false;
