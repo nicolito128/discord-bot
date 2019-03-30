@@ -28,7 +28,8 @@ function checkPermissions(permission, message) {
     return true;
 }
 
-function setCommandParams(message) {
+// Returns the arguments that the commands will use
+function setParams(message) {
 	if (!message.content.includes(config.prefix)) {
 		return false;
 	} else {
@@ -39,34 +40,29 @@ function setCommandParams(message) {
 	}
 }
 
-function checkCommand(curCommand, message, command, user, args) {
-	if (!curCommand.init) return new Error('The function "init" needed to execute the command was not found');
-	if (!curCommand.help) return new Error('The object "help" needed to execute the command was not found');
-	
-	const cmds = curCommand.help.cmds,
-		permission = curCommand.help.permission,
-		permissionValue = checkPermissions(permission, message),
+// Check that the command can be executed by the user.
+function checkCommand(curCommand, message, command) {
+	const permission = checkPermissions(curCommand.permission, message),
 		embed = {
 			embed: {
 				color: 0xff0000,
 				title: 'Access denied',
-				description: `You do not have enough power to use this command. Require permission: ${permission}`
+				description: `You do not have enough power to use this command. Require permission: ${curCommand.permission}`
 			}
 		};
+	if (!permission) return message.channel.send(embed);
 	
-	for (let c in cmds) {
-		if (cmds && command === cmds[c]) {
-			if (!permissionValue || permissionValue == undefined) {
-				return message.channel.send(embed);
-			}
-			return curCommand.init(message, user, command, args);
-		}
+	curCommand = curCommand.commands[command];
+	if (curCommand && curCommand != undefined) {
+		return curCommand;
+	} else {
+		return false;
 	}
 }
 
 function run(message) {
 	const files = loadFiles();
-	const params = setCommandParams(message);
+	const params = setParams(message);
 	let args, command, user;
 	
 	if(!params) {
@@ -77,7 +73,11 @@ function run(message) {
 	
 	for (let f in files) {
 		const curCommand = require(`./commands/${files[f]}`);
-		return checkCommand(curCommand, message, command, user, args);
+		
+		let verification = checkCommand(curCommand, message, command);
+		if (verification) {
+			return verification(message, user, command, args);
+		}
 	}
 }
 
